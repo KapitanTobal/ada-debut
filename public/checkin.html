@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Guest Check-In</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .checkin-page {
+      min-height: 100vh;
+      padding: 60px 20px;
+      background: #f6f3ef;
+    }
+
+    .checkin-container {
+      max-width: 600px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .checkin-container h1 {
+      font-family: Georgia, serif;
+      font-size: 3rem;
+      font-weight: 500;
+    }
+
+    .checkin-container p {
+      color: #77716d;
+    }
+
+    .checkin-card {
+      margin-top: 30px;
+      padding: 28px;
+      background: white;
+      border: 1px solid #ded9d3;
+      text-align: left;
+    }
+
+    .checkin-card h2 {
+      font-family: Georgia, serif;
+      font-weight: 500;
+    }
+
+    .checkin-guest {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 16px 0;
+      border-bottom: 1px solid #ded9d3;
+    }
+
+    .checkin-guest:last-child {
+      border-bottom: none;
+    }
+
+    .checkin-guest span {
+      display: grid;
+      gap: 3px;
+    }
+
+    .checkin-guest small {
+      color: #77716d;
+    }
+
+    .checkin-button {
+      padding: 10px 14px;
+      border: none;
+      background: #181818;
+      color: white;
+      cursor: pointer;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+    }
+
+    .checkin-button.checked {
+      background: #ad6577;
+    }
+
+    .checkin-message {
+      margin-top: 25px;
+      color: #ad6577;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .checkin-container h1 {
+        font-size: 2.3rem;
+      }
+
+      .checkin-guest {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .checkin-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="checkin-page">
+
+  <main class="checkin-container">
+    <p class="eyebrow">Adreana's 18th Birthday</p>
+
+    <h1>Guest Check-In</h1>
+
+    <p id="loadingMessage">
+      Loading invitation group...
+    </p>
+
+    <div id="checkinCard" class="checkin-card" hidden>
+      <h2 id="groupName"></h2>
+      <div id="guestList"></div>
+      <div id="checkinMessage" class="checkin-message"></div>
+    </div>
+  </main>
+
+  <script>
+    const googleSheetURL =
+      "https://script.google.com/macros/s/AKfycbyPnVRU8nsWiOvpbQzaJqP3focHdxCZn1fHdLwkUwhtK48yuz0rGi8mXoj80m-bwZKa/exec";
+
+    const params = new URLSearchParams(window.location.search);
+    const inviteCode = params.get("code");
+
+    const loadingMessage =
+      document.querySelector("#loadingMessage");
+
+    const checkinCard =
+      document.querySelector("#checkinCard");
+
+    const groupName =
+      document.querySelector("#groupName");
+
+    const guestList =
+      document.querySelector("#guestList");
+
+    const checkinMessage =
+      document.querySelector("#checkinMessage");
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function showError(message) {
+      loadingMessage.textContent = message;
+    }
+
+    function loadInvitationGroup() {
+      if (!inviteCode) {
+        showError("No invitation code was provided.");
+        return;
+      }
+
+      const callbackName =
+        "checkinCallback_" + Date.now();
+
+      window[callbackName] = function (data) {
+        delete window[callbackName];
+
+        if (!data.success) {
+          showError(data.message);
+          return;
+        }
+
+        loadingMessage.hidden = true;
+        checkinCard.hidden = false;
+
+        groupName.textContent =
+          data.invitationGroup || "Invitation Group";
+
+        const attendingGuests = data.guests.filter(function (guest) {
+          return (
+            guest.rsvpStatus === "Attending" ||
+            guest.rsvpStatus === "Yes"
+          );
+        });
+
+        if (attendingGuests.length === 0) {
+          guestList.innerHTML =
+            "<p>No attending guests were found.</p>";
+          return;
+        }
+
+        guestList.innerHTML = attendingGuests
+          .map(function (guest) {
+            const alreadyCheckedIn =
+              guest.checkedIn === "Yes";
+
+            return `
+              <div class="checkin-guest">
+                <span>
+                  <strong>${escapeHtml(guest.name)}</strong>
+                  <small>${escapeHtml(guest.relationship)}</small>
+                </span>
+
+                <button
+                  class="checkin-button ${
+                    alreadyCheckedIn ? "checked" : ""
+                  }"
+                  data-guest-name="${escapeHtml(guest.name)}"
+                  ${alreadyCheckedIn ? "disabled" : ""}
+                >
+                  ${
+                    alreadyCheckedIn
+                      ? "Checked In"
+                      : "Check In"
+                  }
+                </button>
+              </div>
+            `;
+          })
+          .join("");
+
+        document
+          .querySelectorAll(".checkin-button:not(:disabled)")
+          .forEach(function (button) {
+            button.addEventListener("click", function () {
+              checkInGuest(
+                button.dataset.guestName,
+                button
+              );
+            });
+          });
+      };
+
+      const script = document.createElement("script");
+
+      script.src =
+        `${googleSheetURL}?code=${encodeURIComponent(inviteCode)}` +
+        `&callback=${callbackName}`;
+
+      script.onerror = function () {
+        showError("Unable to load this invitation.");
+      };
+
+      document.body.appendChild(script);
+    }
+
+    async function checkInGuest(guestName, button) {
+      button.disabled = true;
+      button.textContent = "Checking in...";
+
+      const formData = new URLSearchParams();
+
+      formData.append("action", "checkin");
+      formData.append("inviteCode", inviteCode);
+      formData.append("guestName", guestName);
+
+      try {
+        await fetch(googleSheetURL, {
+          method: "POST",
+          mode: "no-cors",
+          body: formData
+        });
+
+        button.textContent = "Checked In";
+        button.classList.add("checked");
+
+        checkinMessage.textContent =
+          guestName + " has been checked in.";
+      } catch (error) {
+        button.disabled = false;
+        button.textContent = "Try Again";
+
+        checkinMessage.textContent =
+          "Check-in failed. Please try again.";
+      }
+    }
+
+    loadInvitationGroup();
+  </script>
+
+</body>
+</html>

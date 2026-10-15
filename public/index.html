@@ -1,272 +1,467 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Adreana's 18th Birthday</title>
-  <link rel="stylesheet" href="styles.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
-<body>
+<body class="locked">
 
-  <nav class="nav">
-    <a class="brand" href="#top">ADREANA • XVIII</a>
-
-    <div class="nav-links">
-      <a href="#details">Details</a>
-      <a href="#timeline">Timeline</a>
-      <a href="#specials">18 Specials</a>
-      <a href="#rsvp">RSVP</a>
+  <!-- Invitation Access Gate -->
+  <div id="accessGate" class="access-gate">
+    <div class="access-card">
+      <p class="eyebrow">A private invitation</p>
+      <h1>Adreana's<br />18th Birthday</h1>
+      <p>Please wait while we verify your invitation.</p>
+      <div class="loading-dot"></div>
     </div>
-  </nav>
+  </div>
 
-  <header class="hero" id="top">
-    <div class="hero-card">
-      <div class="eyebrow">A birthday celebration</div>
+  <!-- Main Website -->
+  <main id="mainWebsite" hidden>
 
-      <h1>Adreana</h1>
+    <!-- Navigation -->
+    <header class="site-header">
+      <nav class="nav-container">
+        <a href="#top" class="brand">ADREANA</a>
 
-      <h2>is turning eighteen</h2>
+        <button
+          class="menu-toggle"
+          id="menuToggle"
+          type="button"
+          aria-label="Open menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
 
-      <p>
-        Join us as we celebrate Adreana's 18th birthday
-        with love, laughter, and beautiful memories.
-      </p>
+        <div class="nav-links" id="navLinks">
+          <a href="#details">Details</a>
+          <a href="#timeline">Timeline</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#specials">Specials</a>
+          <a href="#rsvp">RSVP</a>
+        </div>
+      </nav>
+    </header>
 
-      <a class="button" href="#rsvp">Please RSVP</a>
-    </div>
-  </header>
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="hero-decoration hero-decoration-left">18</div>
+      <div class="hero-decoration hero-decoration-right">18</div>
 
-  <main>
+      <div class="hero-content">
+        <p class="eyebrow">You are invited to celebrate</p>
 
-    <section class="section" id="details">
+        <h1 class="hero-title">
+          Adreana's
+          <span>18th Birthday</span>
+        </h1>
+
+        <div class="hero-line"></div>
+
+        <p class="hero-date">November 17, 2026</p>
+
+        <p class="hero-welcome">
+          <span id="welcomeName">Dear Guest</span>,
+          we would love to celebrate this special milestone with you.
+        </p>
+
+        <a href="#details" class="outline-button">View Invitation</a>
+      </div>
+    </section>
+
+    <!-- Personalized Invitation -->
+    <section class="personal-section section">
+      <div class="section-narrow">
+        <p class="eyebrow">Especially for you</p>
+
+        <h2>
+          Hello,
+          <span id="personalGuestName">Guest</span>
+        </h2>
+
+        <p class="personal-text">
+          You are warmly invited to be part of Adreana's 18th birthday
+          celebration.
+        </p>
+
+        <div class="invitation-info">
+          <p>
+            <span>Invitation group</span>
+            <strong id="invitationGroup">—</strong>
+          </p>
+
+          <p>
+            <span>Your role</span>
+            <strong id="guestSpecialRole">Guest</strong>
+          </p>
+        </div>
+
+        <div id="guestList" class="guest-list"></div>
+      </div>
+    </section>
+
+    <!-- Details -->
+    <section class="section section-dark" id="details">
       <div class="section-heading">
-        <span>Save the date</span>
-        <h2>Celebration Details</h2>
-        <p>We hope you can join us on Adreana's special day.</p>
+        <p class="eyebrow">The celebration</p>
+        <h2>Event Details</h2>
       </div>
 
       <div class="details-grid">
+        <article class="detail-card">
+          <span class="detail-number">01</span>
+          <p class="detail-label">Date</p>
+          <h3>November 17,<br />2026</h3>
+        </article>
 
-        <div class="detail-card">
-          <div class="detail-icon">📅</div>
-          <h3>Date</h3>
-          <p>Tuesday<br><strong>November 17, 2026</strong></p>
-        </div>
+        <article class="detail-card">
+          <span class="detail-number">02</span>
+          <p class="detail-label">Time</p>
+          <h3>Guests arrive<br />at 4:30 PM</h3>
+        </article>
 
-        <div class="detail-card">
-          <div class="detail-icon">⏰</div>
-          <h3>Arrival</h3>
-          <p>Guests arrive at<br><strong>4:30 PM</strong></p>
-        </div>
+        <article class="detail-card">
+          <span class="detail-number">03</span>
+          <p class="detail-label">Dress Code</p>
+          <h3>Semi-Formal<br />All Black</h3>
+        </article>
 
-        <div class="detail-card">
-          <div class="detail-icon">📍</div>
-          <h3>Location</h3>
-          <p>Pandora Hall<br><strong>Stalla Suites</strong></p>
-        </div>
-
-        <div class="detail-card">
-          <div class="detail-icon">🖤</div>
-          <h3>Dress Code</h3>
-          <p>Semi-Formal<br><strong>All Black</strong></p>
-        </div>
-
+        <article class="detail-card">
+          <span class="detail-number">04</span>
+          <p class="detail-label">Location</p>
+          <h3>Pandora Hall<br />3rd Floor</h3>
+        </article>
       </div>
     </section>
 
-    <section class="section">
-      <div class="countdown-wrap">
-        <h2>The countdown is on!</h2>
+    <!-- Countdown -->
+    <section class="countdown-section section">
+      <div class="section-heading">
+        <p class="eyebrow">Until we celebrate</p>
+        <h2>The Countdown</h2>
+      </div>
 
-        <div class="countdown">
-          <div class="time-box">
-            <strong id="days">00</strong>
-            <small>Days</small>
-          </div>
+      <div class="countdown">
+        <div class="countdown-item">
+          <strong id="days">00</strong>
+          <span>Days</span>
+        </div>
 
-          <div class="time-box">
-            <strong id="hours">00</strong>
-            <small>Hours</small>
-          </div>
+        <div class="countdown-divider">:</div>
 
-          <div class="time-box">
-            <strong id="minutes">00</strong>
-            <small>Minutes</small>
-          </div>
+        <div class="countdown-item">
+          <strong id="hours">00</strong>
+          <span>Hours</span>
+        </div>
 
-          <div class="time-box">
-            <strong id="seconds">00</strong>
-            <small>Seconds</small>
-          </div>
+        <div class="countdown-divider">:</div>
+
+        <div class="countdown-item">
+          <strong id="minutes">00</strong>
+          <span>Minutes</span>
+        </div>
+
+        <div class="countdown-divider">:</div>
+
+        <div class="countdown-item">
+          <strong id="seconds">00</strong>
+          <span>Seconds</span>
         </div>
       </div>
     </section>
 
-    <section class="section">
-      <div class="info-grid">
-
-        <div class="info-panel">
-          <h3>Location</h3>
-
-          <p>
-            Pandora Hall, 3rd Floor<br>
-            Stalla Suites<br>
-            1008 Quezon Ave, Diliman<br>
+    <!-- Location -->
+    <section class="location-section section">
+      <div class="location-content">
+        <div>
+          <p class="eyebrow">Join us at</p>
+          <h2>Pandora Hall</h2>
+          <p class="location-address">
+            3rd Floor, Stalla Suites<br />
+            1008 Quezon Ave, Diliman<br />
             Quezon City, Metro Manila
           </p>
 
           <a
-            class="button"
             href="https://maps.app.goo.gl/sJQSHw9aepSWwJFf6?g_st=ic"
-            target="_blank">
-            Open in Maps
+            target="_blank"
+            rel="noopener"
+            class="dark-button"
+          >
+            Open in Google Maps
           </a>
         </div>
 
-        <div class="info-panel">
-          <h3>Dress Code</h3>
-
-          <p>
-            The dress code is semi-formal and all black.
-            Come dressed in your best elegant black look.
-          </p>
-
-          <div class="pink-note">
-            🖤 Semi-Formal • All Black
-          </div>
+        <div class="location-mark">
+          <span>QC</span>
         </div>
-
       </div>
     </section>
 
+    <!-- Timeline -->
     <section class="section" id="timeline">
       <div class="section-heading">
-        <span>The celebration</span>
-        <h2>Party Timeline</h2>
-        <p>Follow Adreana's special evening from start to finish.</p>
+        <p class="eyebrow">The evening</p>
+        <h2>Timeline</h2>
       </div>
 
-      <div class="party-timeline">
-
-        <div class="timeline-event">
-          <div class="timeline-point">4:30</div>
-
-          <div class="timeline-card">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-time">4:30 PM</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
             <h3>Arrival of Guests</h3>
-            <p>Guests arrive at the holding area.</p>
+            <p>Guests may wait at the holding area.</p>
           </div>
         </div>
 
-        <div class="timeline-event">
-          <div class="timeline-point">5:30</div>
-
-          <div class="timeline-card">
+        <div class="timeline-item">
+          <div class="timeline-time">5:30 PM</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
             <h3>Enter the Main Hall</h3>
-            <p>Guests take their seats.</p>
+            <p>Please proceed to the main event hall.</p>
           </div>
         </div>
 
-        <div class="timeline-event">
-          <div class="timeline-point">6:00</div>
-
-          <div class="timeline-card">
+        <div class="timeline-item">
+          <div class="timeline-time">6:00 PM</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
             <h3>Program Proper</h3>
-            <p>Enjoy the celebration and special program.</p>
+            <p>An evening of dinner, dancing, and celebration.</p>
           </div>
         </div>
 
-        <div class="timeline-event">
-          <div class="timeline-point">9:00</div>
-
-          <div class="timeline-card">
-            <h3>Goodbye</h3>
-            <p>Farewell and final moments until 10:00 PM.</p>
+        <div class="timeline-item">
+          <div class="timeline-time">9:00 PM</div>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <h3>Goodbyes at the Venue</h3>
+            <p>Thank you for celebrating with Adreana.</p>
           </div>
         </div>
-
       </div>
     </section>
 
-    <section class="section" id="specials">
+    <!-- Gallery -->
+    <section class="section gallery-section" id="gallery">
       <div class="section-heading">
-        <span>Make it memorable</span>
+        <p class="eyebrow">A few memories</p>
+        <h2>Adreana</h2>
+      </div>
+
+      <div class="gallery-viewer">
+        <button
+          id="previousPhoto"
+          class="gallery-button"
+          type="button"
+          aria-label="Previous photo"
+        >
+          ‹
+        </button>
+
+        <div class="gallery-image-wrapper">
+          <img
+            id="galleryImage"
+            src="images/1.jpeg"
+            alt="Adreana pre-debut photo"
+          />
+
+          <div id="galleryCounter" class="gallery-counter">
+            1 / 8
+          </div>
+        </div>
+
+        <button
+          id="nextPhoto"
+          class="gallery-button"
+          type="button"
+          aria-label="Next photo"
+        >
+          ›
+        </button>
+      </div>
+
+      <!-- Thumbnail Ribbon -->
+      <div id="galleryThumbnails" class="gallery-thumbnails">
+        <button
+          class="gallery-thumbnail active"
+          type="button"
+          data-photo-index="0"
+        >
+          <img src="images/1.jpeg" alt="Photo 1" />
+        </button>
+
+        <button
+          class="gallery-thumbnail"
+          type="button"
+          data-photo-index="1"
+        >
+          <img src="images/2.jpeg" alt="Photo 2" />
+        </button>
+
+        <button
+          class="gallery-thumbnail"
+          type="button"
+          data-photo-index="2"
+        >
+          <img src="images/3.jpeg" alt="Photo 3" />
+        </button>
+
+        <button
+          class="gallery-thumbnail"
+          type="button"
+          data-photo-index="3"
+        >
+          <img src="images/4.jpeg" alt="Photo 4" />
+        </button>
+
+        <button
+          class="gallery-thumbnail"
+          type="button"
+          data-photo-index="4"
+        >
+          <img src="images/5.jpeg" alt="Photo 5" />
+        </button>
+
+        <button
+          class="gallery-thumbnail"
+          type="button"
+          data-photo-index="5"
+        >
+          <img src="images/6.jpeg" alt="Photo 6" />
+        </button>
+
+        <button
+          class="gallery-thumbnail"
+          type="button"
+          data-photo-index="6"
+        >
+          <img src="images/7.jpeg" alt="Photo 7" />
+        </button>
+
+        <button
+          class="gallery-thumbnail"
+          type="button"
+          data-photo-index="7"
+        >
+          <img src="images/8.jpeg" alt="Photo 8" />
+        </button>
+      </div>
+    </section>
+
+    <!-- 18 Specials -->
+    <section class="section section-dark" id="specials">
+      <div class="section-heading">
+        <p class="eyebrow">A special part of the evening</p>
         <h2>18 Specials</h2>
-        <p>Special traditions for Adreana's 18th birthday.</p>
       </div>
 
-      <div class="specials" id="specialsGrid"></div>
+      <div id="specialsGrid" class="specials-grid"></div>
     </section>
 
-    <section class="section">
+    <!-- Gifts -->
+    <section class="section gifts-section">
       <div class="section-heading">
-        <span>A little note</span>
+        <p class="eyebrow">Your presence is enough</p>
         <h2>Gifts</h2>
       </div>
 
-      <div class="gift-card">
-        <div class="gift-icon">🎁</div>
-
+      <div class="gifts-content">
         <p>
-          Your presence is already a wonderful gift.
-          More information about gifts will be shared soon.
+          Your presence is already the greatest gift. If you would still like
+          to give something, you may bring a meaningful gift, an envelope, or
+          anything you think Adreana would love.
         </p>
+
+        <div class="gift-note">
+          <span>♡</span>
+          <p>Thank you for being part of this special milestone.</p>
+        </div>
       </div>
     </section>
 
-    <section class="section" id="rsvp">
+    <!-- RSVP -->
+    <section class="section section-pink" id="rsvp">
       <div class="section-heading">
-        <span>Let us know</span>
+        <p class="eyebrow">Please let us know</p>
         <h2>RSVP</h2>
-        <p>Please respond 1–2 weeks after receiving the invitation.</p>
       </div>
 
-      <div class="rsvp-card">
+      <div class="rsvp-wrapper">
+        <p class="rsvp-intro">
+          Kindly confirm the attendance of each person included in your
+          invitation.
+        </p>
+
         <form id="rsvpForm">
+          <div id="rsvpGuestList" class="rsvp-guest-list"></div>
 
-          <div class="form-grid">
-            <div>
-              <label for="name">Your name</label>
-              <input id="name" required placeholder="First and last name">
-            </div>
+          <label for="message">Message for Adreana <span>(optional)</span></label>
+          <textarea
+            id="message"
+            name="message"
+            rows="4"
+            placeholder="Write a birthday message..."
+          ></textarea>
 
-            <div class="full">
-              <label for="attendance">Will you be joining us?</label>
+          <button class="dark-button submit-button" type="submit">
+            Submit RSVP
+          </button>
 
-              <select id="attendance" required>
-                <option value="">Please select</option>
-                <option>Yes, absolutely!</option>
-                <option>Sorry, I cannot attend</option>
-              </select>
-            </div>
-
-            <div class="full">
-              <label for="message">Message for Adreana</label>
-              <textarea
-                id="message"
-                placeholder="Write a birthday message..."></textarea>
-            </div>
-          </div>
-
-          <div class="form-submit">
-            <button class="button" type="submit">Send RSVP</button>
-          </div>
-
-          <div id="confirmation">
-            Thank you! Your RSVP has been received. 💗
-          </div>
-
+          <p id="confirmation" class="confirmation" hidden></p>
         </form>
+
+        <!-- QR Code appears after RSVP -->
+        <div id="qrSection" class="qr-section" hidden>
+          <h3>Your group check-in QR code</h3>
+
+          <p>
+            Please save this QR code. It can be used to check in everyone
+            included in this invitation group.
+          </p>
+
+          <div id="qrcode"></div>
+
+          <a
+            id="downloadQr"
+            class="dark-button"
+            download="adreana-checkin-qr.png"
+          >
+            Download QR Code
+          </a>
+        </div>
       </div>
     </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-mark">A</div>
+      <p>With love, Adreana</p>
+      <small>November 17, 2026</small>
+    </footer>
 
   </main>
 
-  <footer>
-    <strong>See you in Barbie Land!</strong>
-    <span>With love, Adreana and family • XVIII</span>
-  </footer>
+  <!-- QR Code Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+  <!-- Your JavaScript -->
   <script src="script.js"></script>
 
 </body>
