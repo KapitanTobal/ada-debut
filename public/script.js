@@ -148,7 +148,8 @@ function renderGuestInformation() {
   if (!currentInvitation) return;
 
   const guests = currentInvitation.guests || [];
-  const firstGuest = guests[0] || {};
+  const groupName =
+    currentInvitation.invitationGroup || "Guest";
 
   const welcomeName =
     document.querySelector("#welcomeName");
@@ -163,18 +164,15 @@ function renderGuestInformation() {
     document.querySelector("#guestSpecialRole");
 
   if (welcomeName) {
-    welcomeName.textContent =
-      firstGuest.name || currentInvitation.primaryContact || "Guest";
+    welcomeName.textContent = groupName;
   }
 
   if (personalGuestName) {
-    personalGuestName.textContent =
-      firstGuest.name || currentInvitation.primaryContact || "Guest";
+    personalGuestName.textContent = groupName;
   }
 
   if (invitationGroup) {
-    invitationGroup.textContent =
-      currentInvitation.invitationGroup || "Private invitation";
+    invitationGroup.textContent = groupName;
   }
 
   if (guestSpecialRole) {
@@ -196,27 +194,38 @@ function renderGuestList() {
 
   if (!container || !currentInvitation) return;
 
-  const guests = currentInvitation.guests || [];
+  const guests =
+    currentInvitation.guests || [];
 
   container.innerHTML = `
-    <div class="guest-list-heading">
-      <p class="eyebrow">Included in this invitation</p>
-    </div>
+    <p class="eyebrow">Included in this invitation</p>
 
     ${guests
       .map(
         (guest) => `
           <div class="authorized-guest">
-            <strong>${escapeHtml(guest.name)}</strong>
+            <div>
+              <strong>
+                ${escapeHtml(guest.name)}
+              </strong>
 
-            <span>
-              ${escapeHtml(guest.relationship || "Guest")}
-            </span>
+              <span>
+                ${escapeHtml(
+                  guest.relationship || "Guest"
+                )}
+              </span>
+            </div>
 
             ${
               guest.specialRole &&
               guest.specialRole !== "None"
-                ? `<small>${escapeHtml(guest.specialRole)}</small>`
+                ? `
+                  <small>
+                    ${escapeHtml(
+                      guest.specialRole
+                    )}
+                  </small>
+                `
                 : ""
             }
           </div>
@@ -225,7 +234,6 @@ function renderGuestList() {
       .join("")}
   `;
 }
-
 
 /* -------------------------
    RSVP GUEST LIST
