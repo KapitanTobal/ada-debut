@@ -8,9 +8,7 @@ const EVENT_DATE = new Date(
 let currentInvitation = null;
 
 
-/* -------------------------
-   BASIC HELPERS
-------------------------- */
+/* HELPERS */
 
 function escapeHtml(value) {
   return String(value || "")
@@ -26,13 +24,14 @@ function redirectTo404() {
 }
 
 
-/* -------------------------
-   UNLOCK WEBSITE
-------------------------- */
+/* UNLOCK WEBSITE */
 
 function unlockWebsite() {
-  const gate = document.querySelector("#accessGate");
-  const website = document.querySelector("#mainWebsite");
+  const gate =
+    document.querySelector("#accessGate");
+
+  const website =
+    document.querySelector("#mainWebsite");
 
   document.body.classList.remove("locked");
 
@@ -47,16 +46,16 @@ function unlockWebsite() {
 }
 
 
-/* -------------------------
-   COUNTDOWN
-------------------------- */
+/* COUNTDOWN */
 
 function updateCountdown() {
-  const countdown = document.querySelector(".countdown");
+  const countdown =
+    document.querySelector(".countdown");
 
   if (!countdown) return;
 
-  const distance = EVENT_DATE - Date.now();
+  const distance =
+    EVENT_DATE - Date.now();
 
   if (distance <= 0) {
     countdown.innerHTML =
@@ -64,10 +63,17 @@ function updateCountdown() {
     return;
   }
 
-  const days = document.querySelector("#days");
-  const hours = document.querySelector("#hours");
-  const minutes = document.querySelector("#minutes");
-  const seconds = document.querySelector("#seconds");
+  const days =
+    document.querySelector("#days");
+
+  const hours =
+    document.querySelector("#hours");
+
+  const minutes =
+    document.querySelector("#minutes");
+
+  const seconds =
+    document.querySelector("#seconds");
 
   if (days) {
     days.textContent = String(
@@ -95,9 +101,7 @@ function updateCountdown() {
 }
 
 
-/* -------------------------
-   18 SPECIALS
-------------------------- */
+/* 18 SPECIALS */
 
 const specialNames = [
   [
@@ -119,7 +123,8 @@ const specialNames = [
 ];
 
 function renderSpecials() {
-  const grid = document.querySelector("#specialsGrid");
+  const grid =
+    document.querySelector("#specialsGrid");
 
   if (!grid) return;
 
@@ -140,16 +145,31 @@ function renderSpecials() {
 }
 
 
-/* -------------------------
-   GUEST INFORMATION
-------------------------- */
+/* GUEST INFORMATION */
 
 function renderGuestInformation() {
   if (!currentInvitation) return;
 
-  const guests = currentInvitation.guests || [];
+  const guests =
+    currentInvitation.guests || [];
+
   const groupName =
-    currentInvitation.invitationGroup || "Guest";
+    currentInvitation.invitationGroup || "";
+
+  const primaryContact =
+    currentInvitation.primaryContact || "Guest";
+
+  /*
+    Family invitation:
+    Invitation Group = "Dela Cruz Family"
+
+    Individual invitation:
+    Invitation Group = "Individual"
+  */
+  const greetingName =
+    groupName.toLowerCase().includes("family")
+      ? groupName
+      : primaryContact;
 
   const welcomeName =
     document.querySelector("#welcomeName");
@@ -164,29 +184,37 @@ function renderGuestInformation() {
     document.querySelector("#guestSpecialRole");
 
   if (welcomeName) {
-    welcomeName.textContent = groupName;
+    welcomeName.textContent = greetingName;
   }
 
   if (personalGuestName) {
-    personalGuestName.textContent = groupName;
+    personalGuestName.textContent = greetingName;
   }
 
   if (invitationGroup) {
-    invitationGroup.textContent = groupName;
+    invitationGroup.textContent =
+      groupName || "Individual invitation";
   }
 
   if (guestSpecialRole) {
     const roles = guests
       .map((guest) => guest.specialRole)
-      .filter((role) => role && role !== "None");
+      .filter(
+        (role) => role && role !== "None"
+      );
 
     guestSpecialRole.textContent =
-      roles.length > 0 ? roles.join(", ") : "Guest";
+      roles.length > 0
+        ? roles.join(", ")
+        : "Guest";
   }
 
   renderGuestList();
   renderRsvpGuests();
 }
+
+
+/* INDIVIDUAL GUEST LIST */
 
 function renderGuestList() {
   const container =
@@ -198,7 +226,9 @@ function renderGuestList() {
     currentInvitation.guests || [];
 
   container.innerHTML = `
-    <p class="eyebrow">Included in this invitation</p>
+    <p class="eyebrow">
+      Included in this invitation
+    </p>
 
     ${guests
       .map(
@@ -235,9 +265,8 @@ function renderGuestList() {
   `;
 }
 
-/* -------------------------
-   RSVP GUEST LIST
-------------------------- */
+
+/* RSVP GUEST LIST */
 
 function renderRsvpGuests() {
   const container =
@@ -245,7 +274,8 @@ function renderRsvpGuests() {
 
   if (!container || !currentInvitation) return;
 
-  const guests = currentInvitation.guests || [];
+  const guests =
+    currentInvitation.guests || [];
 
   container.innerHTML = `
     <p class="rsvp-list-title">
@@ -257,9 +287,14 @@ function renderRsvpGuests() {
         (guest, index) => `
           <div class="rsvp-guest-row">
             <div class="rsvp-guest-info">
-              <strong>${escapeHtml(guest.name)}</strong>
+              <strong>
+                ${escapeHtml(guest.name)}
+              </strong>
+
               <small>
-                ${escapeHtml(guest.relationship || "Guest")}
+                ${escapeHtml(
+                  guest.relationship || "Guest"
+                )}
               </small>
             </div>
 
@@ -272,6 +307,7 @@ function renderRsvpGuests() {
                   data-guest-index="${index}"
                   value="Yes"
                 />
+
                 <span>Attending</span>
               </label>
 
@@ -283,6 +319,7 @@ function renderRsvpGuests() {
                   data-guest-index="${index}"
                   value="No"
                 />
+
                 <span>Not attending</span>
               </label>
             </div>
@@ -293,9 +330,8 @@ function renderRsvpGuests() {
   `;
 }
 
-/* -------------------------
-   GALLERY
-------------------------- */
+
+/* GALLERY */
 
 function setupGallery() {
   const image =
@@ -348,7 +384,7 @@ function setupGallery() {
         >
           <img
             src="${photo}"
-            alt="Adreana pre-debut photo ${index + 1}"
+            alt="Adreana pre-debut photo"
           />
         </button>
       `
@@ -362,9 +398,13 @@ function setupGallery() {
     image.style.opacity = "0";
 
     setTimeout(() => {
-      image.src = photos[currentPhoto];
+      image.src =
+        photos[currentPhoto];
+
       image.alt =
-        `Adreana pre-debut photo ${currentPhoto + 1}`;
+        `Adreana pre-debut photo ${
+          currentPhoto + 1
+        }`;
 
       if (counter) {
         counter.textContent =
@@ -406,9 +446,7 @@ function setupGallery() {
 }
 
 
-/* -------------------------
-   RSVP SUBMISSION
-------------------------- */
+/* RSVP SUBMISSION */
 
 function setupRsvp() {
   const form =
@@ -505,9 +543,8 @@ function setupRsvp() {
   });
 }
 
-/* -------------------------
-   QR CODE
-------------------------- */
+
+/* QR CODE */
 
 function showGroupQr() {
   const qrSection =
@@ -529,7 +566,9 @@ function showGroupQr() {
   }
 
   if (typeof QRCode === "undefined") {
-    console.error("QR Code library was not loaded.");
+    console.error(
+      "QR Code library was not loaded."
+    );
     return;
   }
 
@@ -561,13 +600,13 @@ function showGroupQr() {
 }
 
 
-/* -------------------------
-   LOAD INVITATION
-------------------------- */
+/* LOAD INVITATION */
 
 function loadInvitation() {
   const params =
-    new URLSearchParams(window.location.search);
+    new URLSearchParams(
+      window.location.search
+    );
 
   const inviteCode =
     params.get("invite");
@@ -616,9 +655,7 @@ function loadInvitation() {
 }
 
 
-/* -------------------------
-   MOBILE MENU
-------------------------- */
+/* MOBILE MENU */
 
 function setupMobileMenu() {
   const menuToggle =
@@ -633,17 +670,17 @@ function setupMobileMenu() {
     navLinks.classList.toggle("open");
   });
 
-  navLinks.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navLinks.classList.remove("open");
+  navLinks
+    .querySelectorAll("a")
+    .forEach((link) => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+      });
     });
-  });
 }
 
 
-/* -------------------------
-   START WEBSITE
-------------------------- */
+/* START WEBSITE */
 
 document.addEventListener("DOMContentLoaded", () => {
   renderSpecials();
