@@ -1067,3 +1067,56 @@ select {
     grid-template-columns: 1fr;
   }
 }
+
+.special-guidelines {
+  margin-top: 55px;
+  text-align: left;
+}
+
+.special-guidelines-heading {
+  margin-bottom: 20px;
+}
+
+.special-guidelines-heading h3 {
+  margin: 8px 0 0;
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.guidelines-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.guideline-card {
+  padding: 24px;
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+
+.guideline-card h3 {
+  margin: 0 0 15px;
+  color: var(--rose);
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.guideline-card ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.guideline-card li {
+  margin: 8px 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+@media (max-width: 700px) {
+  .guidelines-grid {
+    grid-template-columns: 1fr;
+  }
+}

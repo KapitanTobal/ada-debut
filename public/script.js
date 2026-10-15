@@ -210,6 +210,7 @@ function renderGuestInformation() {
   }
 
   renderGuestList();
+  renderSpecialGuidelines();
   renderRsvpGuests();
 }
 
@@ -265,6 +266,88 @@ function renderGuestList() {
   `;
 }
 
+function renderSpecialGuidelines() {
+  const container =
+    document.querySelector("#specialGuidelines");
+
+  if (!container || !currentInvitation) return;
+
+  const guests =
+    currentInvitation.guests || [];
+
+  const roles = [
+    ...new Set(
+      guests
+        .map((guest) => guest.specialRole)
+        .filter(
+          (role) => role && role !== "None"
+        )
+    )
+  ];
+
+  const guidelines = {
+    "18 Candles": [
+      "Bring a handwritten or printed letter.",
+      "Prepare a short message around 30–45 seconds.",
+      "Upload your favorite photo together."
+    ],
+
+    "18 Roses": [
+      "Prepare a short handwritten letter.",
+      "Choose a song, singer, and timestamp.",
+      "Upload your favorite photo together."
+    ],
+
+    "18 Treasures": [
+      "Choose a meaningful gift for Adreana.",
+      "You may choose from the suggested gift list.",
+      "Your thoughtfulness means the most."
+    ],
+
+    "18 Envelopes": [
+      "Any amount you are comfortable giving is welcome.",
+      "There is no minimum required amount.",
+      "An envelope will be provided at the venue."
+    ]
+  };
+
+  if (roles.length === 0) {
+    container.innerHTML = "";
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="special-guidelines-heading">
+      <p class="eyebrow">Your special role</p>
+      <h3>Things to prepare</h3>
+    </div>
+
+    <div class="guidelines-grid">
+      ${roles
+        .map((role) => {
+          const items = guidelines[role];
+
+          if (!items) return "";
+
+          return `
+            <article class="guideline-card">
+              <h3>${escapeHtml(role)}</h3>
+
+              <ul>
+                ${items
+                  .map(
+                    (item) =>
+                      `<li>${escapeHtml(item)}</li>`
+                  )
+                  .join("")}
+              </ul>
+            </article>
+          `;
+        })
+        .join("")}
+    </div>
+  `;
+}
 
 /* RSVP GUEST LIST */
 
